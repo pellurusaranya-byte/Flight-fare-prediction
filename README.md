@@ -1,5 +1,8 @@
 # ✈️ FlyWise – Flight Fare Prediction
 
+🔗 **Live demo:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/  
+📄 **Project report:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/report.html
+
 **FlyWise** is a machine-learning-based web application that predicts domestic flight ticket prices in India based on flight search details. It helps users estimate airfare before booking their journey.
 
 ## 🌟 Features
@@ -145,5 +148,3 @@ FlyWise provides estimated flight fares based on historical data and machine lea
 ---
 
 **Developed as an academic machine learning project.**
-Link to website
-https://pellurusaranya-byte.github.io/Flight-fare-prediction/
