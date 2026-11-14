@@ -145,3 +145,5 @@ FlyWise provides estimated flight fares based on historical data and machine lea
 ---
 
 **Developed as an academic machine learning project.**
+Link to website
+https://pellurusaranya-byte.github.io/Flight-fare-prediction/
