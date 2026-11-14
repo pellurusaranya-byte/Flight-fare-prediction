@@ -1,0 +1,847 @@
+
+/* ===================================
+   1. GENERAL RESET AND BASE STYLING
+=================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f4f7fc;
+    color: #172b4d;
+    line-height: 1.6;
+}
+
+
+/* ===================================
+   2. NAVIGATION BAR
+=================================== */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 8%;
+
+    background-color: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #123c69;
+}
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #344563;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #1684d6;
+}
+
+
+/* ===================================
+   3. HERO SECTION
+=================================== */
+
+.hero {
+    min-height: 560px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 70px 10%;
+
+    background: linear-gradient(
+        120deg,
+        #092747,
+        #124b7a,
+        #1684d6
+    );
+
+    color: white;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.tagline {
+    color: #1684d6;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.hero .tagline {
+    color: #8ed4ff;
+}
+
+.hero h1 {
+    font-size: 54px;
+    line-height: 1.2;
+    margin-bottom: 22px;
+}
+
+.hero h1 span {
+    color: #8ed4ff;
+}
+
+.hero-description {
+    font-size: 17px;
+    color: #dcecff;
+    max-width: 520px;
+    margin-bottom: 30px;
+}
+
+.hero-button {
+    display: inline-block;
+
+    padding: 14px 28px;
+
+    background-color: #ffffff;
+    color: #123c69;
+
+    border-radius: 8px;
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #dcecff;
+    transform: translateY(-2px);
+}
+
+
+/* ===================================
+   4. FLIGHT SEARCH SECTION
+=================================== */
+
+.search-section {
+    padding: 80px 10%;
+    background: transparent;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.section-heading h2 {
+    font-size: 34px;
+    color: #123c69;
+    margin-bottom: 10px;
+}
+
+.section-heading p {
+    color: #64748b;
+}
+
+
+/* ===================================
+   5. FLIGHT FORM CARD
+=================================== */
+
+.flight-form {
+    max-width: 1000px;
+    margin: auto;
+
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border-radius: 16px;
+
+    box-shadow: 0 8px 35px rgba(18, 60, 105, 0.09);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #344563;
+    margin-bottom: 9px;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d5dfeb;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    font-size: 14px;
+    color: #344563;
+
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    border-color: #1684d6;
+    box-shadow: 0 0 0 3px rgba(22, 132, 214, 0.12);
+}
+
+
+/* ===================================
+   6. PREDICTION BUTTON
+=================================== */
+
+.predict-button {
+    grid-column: 1 / -1;
+
+    padding: 16px;
+
+    background: linear-gradient(
+        90deg,
+        #123c69,
+        #1684d6
+    );
+
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.predict-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(22, 132, 214, 0.25);
+}
+
+
+/* ===================================
+   7. PREDICTION RESULT
+=================================== */
+
+.prediction-result {
+    max-width: 700px;
+    margin: 35px auto 0;
+
+    padding: 35px;
+
+    text-align: center;
+
+    background-color: #ffffff;
+
+    border: 1px solid #b7dcf8;
+    border-radius: 14px;
+
+    box-shadow: 0 8px 25px rgba(18, 60, 105, 0.08);
+}
+
+.prediction-result p:first-child {
+    color: #1684d6;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    font-size: 13px;
+}
+
+.prediction-result h2 {
+    font-size: 42px;
+    color: #123c69;
+    margin: 12px 0;
+}
+
+.prediction-result p:last-child {
+    color: #64748b;
+    font-size: 14px;
+}
+
+
+/* ===================================
+   8. ERROR MESSAGE
+=================================== */
+
+.error-message {
+    max-width: 700px;
+    margin: 25px auto 0;
+
+    padding: 15px;
+
+    text-align: center;
+
+    color: #b42318;
+    background-color: #fff0ee;
+
+    border: 1px solid #f5b5ae;
+    border-radius: 8px;
+}
+
+
+/* ===================================
+   9. ABOUT SECTION
+=================================== */
+
+.about-section {
+    padding: 75px 15%;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.about-section h2 {
+    font-size: 32px;
+    color: #123c69;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    max-width: 750px;
+    margin: 0 auto 15px;
+    color: #64748b;
+}
+
+.about-section .disclaimer {
+    font-size: 13px;
+    color: #8795a8;
+}
+
+
+/* ===================================
+   10. FOOTER
+=================================== */
+
+footer {
+    padding: 22px;
+    text-align: center;
+
+    background-color: #092747;
+    color: #dcecff;
+
+    font-size: 14px;
+}
+
+
+/* ===================================
+   11. RESPONSIVE DESIGN
+=================================== */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 18px 5%;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nav-links {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: 450px;
+        padding: 55px 7%;
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .search-section {
+        padding: 55px 5%;
+    }
+
+    .flight-form {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .predict-button {
+        grid-column: 1;
+    }
+
+    .section-heading h2 {
+        font-size: 27px;
+    }
+
+    .about-section {
+        padding: 55px 7%;
+    }
+}
+
+/* ===================================
+   WELCOME PAGE
+=================================== */
+
+
+/* ===================================
+   GLASSMORPHISM WELCOME PAGE
+=================================== */
+
+.welcome-page,
+.prediction-page  {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(circle at 15% 20%, #ffffff 0%, transparent 35%),
+        radial-gradient(circle at 85% 65%, #b7d9ff 0%, transparent 35%),
+        linear-gradient(135deg, #eaf4ff, #c9e1ff, #edf6ff);
+
+    color: #102a56;
+}
+
+
+/* NAVIGATION */
+
+.glass-navbar {
+    width: 90%;
+    margin: 22px auto 0;
+    padding: 17px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    border-radius: 18px;
+
+    box-shadow: 0 8px 30px rgba(42, 94, 160, 0.08);
+}
+
+.welcome-page .logo {
+    font-size: 27px;
+    font-weight: 800;
+    color: #123c69;
+    text-decoration: none;
+}
+
+.logo-icon {
+    color: #2563eb;
+    margin-right: 5px;
+}
+
+.welcome-page .logo span:last-child {
+    color: #2563eb;
+}
+
+.welcome-page .nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.welcome-page .nav-links a {
+    text-decoration: none;
+    color: #344563;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.welcome-page .nav-links a:hover,
+.welcome-page .nav-links a.active {
+    color: #2563eb;
+}
+
+
+/* HERO SECTION */
+
+.welcome-hero {
+    flex: 1;
+
+    min-height: 590px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 80px 8%;
+
+    overflow: hidden;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 750px;
+    text-align: center;
+}
+
+.welcome-badge {
+    display: inline-block;
+
+    padding: 10px 20px;
+    margin-bottom: 22px;
+
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 30px;
+
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.welcome-content h1 {
+    font-size: clamp(42px, 6vw, 68px);
+    line-height: 1.12;
+    margin-bottom: 22px;
+    color: #102a56;
+}
+
+.welcome-content h1 span {
+    color: #2563eb;
+}
+
+.welcome-content h2 {
+    font-size: 23px;
+    color: #31527e;
+    margin-bottom: 17px;
+}
+
+.welcome-description {
+    max-width: 620px;
+    margin: 0 auto 30px;
+
+    color: #536b8e;
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+
+/* PREDICTION BUTTON */
+
+.welcome-page .hero-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 16px 30px;
+
+    background: linear-gradient(120deg, #2563eb, #4b91ed);
+    color: white;
+
+    border-radius: 13px;
+    text-decoration: none;
+
+    font-weight: bold;
+    font-size: 16px;
+
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+
+    transition: 0.3s;
+}
+
+.welcome-page .hero-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
+}
+
+.welcome-page .hero-button span {
+    font-size: 21px;
+}
+
+.welcome-note {
+    margin-top: 23px;
+    color: #6581a5;
+    font-size: 14px;
+}
+
+
+/* FLOATING DECORATIONS */
+
+.sky-decoration {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(2px);
+}
+
+.decoration-one {
+    width: 240px;
+    height: 240px;
+    background: rgba(255, 255, 255, 0.45);
+    top: 8%;
+    left: -100px;
+}
+
+.decoration-two {
+    width: 320px;
+    height: 320px;
+    background: rgba(116, 177, 255, 0.16);
+    bottom: -130px;
+    right: -100px;
+}
+
+
+/* GLASS FLIGHT CARD */
+
+.glass-flight-card {
+    position: absolute;
+    right: 7%;
+    bottom: 35px;
+
+    width: 300px;
+    padding: 23px;
+
+    background: rgba(255, 255, 255, 0.42);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+
+    box-shadow: 0 12px 35px rgba(42, 94, 160, 0.12);
+
+    animation: floatCard 5s ease-in-out infinite;
+}
+
+.flight-card-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.flight-card-label {
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    color: #2563eb;
+}
+
+.glass-flight-card h3 {
+    margin: 8px 0;
+    font-size: 20px;
+    color: #102a56;
+}
+
+.glass-flight-card > p:not(.flight-card-label) {
+    color: #536b8e;
+    font-size: 13px;
+}
+
+.flight-card-line {
+    height: 1px;
+    background: rgba(37, 99, 235, 0.18);
+    margin: 18px 0;
+}
+
+.flight-card-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 11px;
+    color: #31527e;
+}
+
+@keyframes floatCard {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-9px);
+    }
+}
+
+
+/* FEATURES SECTION */
+
+.features-section {
+    padding: 75px 9%;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.features-heading > p {
+    color: #2563eb;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.features-heading h2 {
+    color: #102a56;
+    font-size: 30px;
+    margin: 12px 0 38px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.feature-card {
+    padding: 30px 24px;
+
+    background: rgba(255, 255, 255, 0.48);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+
+    box-shadow: 0 8px 25px rgba(42, 94, 160, 0.07);
+
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 14px 30px rgba(42, 94, 160, 0.13);
+}
+
+.feature-icon {
+    font-size: 35px;
+    margin-bottom: 13px;
+}
+
+.feature-card h3 {
+    color: #123c69;
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+.feature-card p {
+    color: #647b9c;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.features-disclaimer {
+    margin-top: 35px;
+    color: #7085a1;
+    font-size: 12px;
+}
+
+
+/* FOOTER */
+
+.welcome-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 22px 8%;
+
+    background: rgba(255, 255, 255, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+
+    color: #536b8e;
+    font-size: 13px;
+}
+
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 900px) {
+
+    .glass-flight-card {
+        display: none;
+    }
+
+    .welcome-hero {
+        min-height: 570px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .glass-navbar {
+        width: 94%;
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .welcome-page .nav-links {
+        gap: 24px;
+    }
+
+    .welcome-hero {
+        padding: 65px 6%;
+        min-height: 550px;
+    }
+
+    .welcome-content h1 {
+        font-size: 40px;
+    }
+
+    .welcome-content h2 {
+        font-size: 19px;
+    }
+
+    .welcome-description {
+        font-size: 15px;
+    }
+
+    .features-section {
+        padding: 55px 6%;
+    }
+
+    .features-heading h2 {
+        font-size: 25px;
+    }
+
+    .welcome-footer {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}
