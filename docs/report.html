@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlyWise | Project Report</title>
+<style>
+:root{--ink:#102a56;--text:#344563;--muted:#64748b;--blue:#2563eb;--soft:#eef5ff;--line:#dcecff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.65;background:#f7faff}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:10px 4%;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+nav b{color:var(--ink);margin-right:10px}
+nav a{color:var(--text);text-decoration:none;font-size:14px}
+nav a:hover{color:var(--blue)}
+header{background:linear-gradient(135deg,#123c69,#1684d6);color:#fff;padding:56px 6% 48px}
+header h1{margin:0 0 8px;font-size:34px}
+header p{margin:6px 0;max-width:780px;opacity:.95}
+.btn{display:inline-block;margin:14px 10px 0 0;padding:10px 20px;border-radius:30px;background:#fff;color:var(--ink);text-decoration:none;font-weight:bold;font-size:14px}
+main{max-width:900px;margin:auto;padding:10px 5% 50px}
+section{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px 28px;margin:22px 0}
+h2{color:var(--ink);margin:0 0 10px;font-size:23px}
+h2 span{color:var(--blue);margin-right:6px}
+table{border-collapse:collapse;width:100%;font-size:14px;margin:12px 0}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{background:var(--soft);color:var(--ink)}
+code,pre{background:#0f172a;color:#e2e8f0;border-radius:8px;font-size:13px}
+code{padding:1px 6px}
+pre{padding:14px;overflow-x:auto}
+img{max-width:100%;border:1px solid var(--line);border-radius:10px}
+figure{margin:14px 0}
+figcaption{font-size:13px;color:var(--muted)}
+.note{background:var(--soft);border-left:4px solid var(--blue);padding:10px 14px;border-radius:8px;font-size:14px}
+.demo{background:var(--soft);border-radius:12px;padding:16px;margin:14px 0}
+.demo label{margin-right:14px;font-size:14px;cursor:pointer}
+.row{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:14px}
+.row .nm{width:150px;flex:none}
+.bar{height:22px;background:#9bbcf5;border-radius:5px;min-width:3px;transition:width .35s}
+.row.best .bar{background:var(--blue)}
+.big{font-size:34px;color:var(--blue);font-weight:bold;margin:4px 0}
+input[type=range]{width:100%}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:20px}
+</style>
+</head>
+<body>
+<nav>
+<b>✈ FlyWise</b>
+<a href="index.html">Home</a><a href="predict.html">Predict a fare</a>
+<a href="#question">Question</a><a href="#data">Data</a><a href="#preprocessing">Preprocessing</a><a href="#methods">Methods</a><a href="#evaluation">Evaluation</a><a href="#results">Results</a><a href="#errors">Errors</a><a href="#limitations">Limitations</a><a href="#conclusion">Conclusion</a><a href="#reproduce">Reproduce</a>
+</nav>
+
+<header>
+<h1>FlyWise: Predicting Indian Domestic Flight Fares</h1>
+<p>An ES335 machine learning project. We train regression models on about 300,000 flight listings and test how well they predict prices for routes they have never seen.</p>
+<a class="btn" href="predict.html">Try the fare predictor →</a>
+<a class="btn" href="https://github.com/pellurusaranya-byte/Flight-fare-prediction">Source code on GitHub</a>
+</header>
+
+<main>
+
+<section id="question">
+<h2><span>1.</span>Question</h2>
+<p><b>Given the details of a flight search (route, airline, class, stops, departure time, duration and how many days remain before departure), how accurately can we predict the ticket price in rupees?</b></p>
+<p>This is a regression problem. We also ask a stricter follow-up: <i>does the model still work on city pairs it was never trained on?</i></p>
+</section>
+
+<section id="data">
+<h2><span>2.</span>Data</h2>
+<p>The Kaggle "Flight Price Prediction" dataset (<code>Clean_Dataset.csv</code>) has <b>300,153 flights</b>, 11 columns and no missing values. It covers 6 airlines and 6 metro cities (Delhi, Mumbai, Bangalore, Kolkata, Hyderabad, Chennai). Days left before departure range from 1 to 49.</p>
+<table>
+<tr><th>Column</th><th>Type</th><th>Meaning</th></tr>
+<tr><td>airline, source_city, destination_city</td><td>category</td><td>Who flies, and between which cities</td></tr>
+<tr><td>departure_time, arrival_time</td><td>category</td><td>Six time-of-day buckets</td></tr>
+<tr><td>stops</td><td>category</td><td>zero, one, two_or_more</td></tr>
+<tr><td>class</td><td>category</td><td>Economy or Business</td></tr>
+<tr><td>duration, days_left</td><td>number</td><td>Hours in the air; days between search and departure</td></tr>
+<tr><td><b>price</b></td><td>target</td><td>Ticket price in ₹ (₹1,105 to ₹123,071, median ₹7,425)</td></tr>
+</table>
+<p>Prices come in two very different groups: Economy has a median of about ₹5,772 and Business about ₹53,164. This is the single biggest fact about the data.</p>
+<figure><img src="images/price_distribution.png" alt="Distribution of flight prices"><figcaption>Prices are heavily skewed, with a second cluster from Business class.</figcaption></figure>
+<figure><img src="images/class_prices.png" alt="Price by travel class"><figcaption>Business fares are roughly nine times Economy fares.</figcaption></figure>
+</section>
+
+<section id="preprocessing">
+<h2><span>3.</span>Preprocessing</h2>
+<ul>
+<li>Dropped the row-index column and the <code>flight</code> code (an ID, not a feature).</li>
+<li>One-hot encoded the 7 categorical columns, giving 35 binary columns.</li>
+<li>Standardised <code>duration</code> and <code>days_left</code> (mean 0, standard deviation 1).</li>
+<li>Everything is wrapped in a scikit-learn <code>Pipeline</code>, so the encoder and scaler are fitted on training data only, which avoids leaking test information.</li>
+</ul>
+</section>
+
+<section id="methods">
+<h2><span>4.</span>Baseline and methods</h2>
+<table>
+<tr><th>Model</th><th>Role</th><th>Idea</th></tr>
+<tr><td>Median by class</td><td>Naive baseline</td><td>Predict the median training price for Economy or Business. No learning from other features.</td></tr>
+<tr><td>Linear Regression</td><td>Simple model</td><td>Price as a weighted sum of the features.</td></tr>
+<tr><td>Random Forest</td><td>Tree ensemble</td><td>Averages many decision trees (30 trees, depth 15 in the grouped tests).</td></tr>
+<tr><td>Gradient Boosting</td><td>Final model</td><td>Adds 150 small trees one at a time, each fixing the previous errors.</td></tr>
+</table>
+</section>
+
+<section id="evaluation">
+<h2><span>5.</span>Evaluation</h2>
+<p>We report <b>MAE</b> (average miss in ₹), <b>RMSE</b> (like MAE but punishes big misses) and <b>R²</b> (share of price variation explained). We use three validation setups, from easy to strict:</p>
+<table>
+<tr><th>Setup</th><th>How the data is split</th></tr>
+<tr><td>Random split</td><td>Random 80/20 split of a 50,000-row sample. The same route appears in both train and test, so it is the easiest test.</td></tr>
+<tr><td>Held-out routes</td><td>One 80/20 split where whole city pairs (both directions together) are kept out of training.</td></tr>
+<tr><td>5-fold route CV</td><td>GroupKFold with 5 folds, each fold holding out different city pairs. This is the strictest and most reliable, and it is what we used to pick the final model.</td></tr>
+</table>
+</section>
+
+<section id="results">
+<h2><span>6.</span>Results</h2>
+<p><b>Interactive: compare the models.</b> Choose a validation setup and a metric to see how the ranking and the gap change.</p>
+<div class="demo">
+<div id="setup-opts"></div>
+<div style="margin:8px 0 12px" id="metric-opts"></div>
+<div id="bars"></div>
+<p class="note" id="caption"></p>
+</div>
+<p>Gradient Boosting averages <b>₹3,163 MAE and R² 0.941</b> in 5-fold route CV, ahead of Random Forest (₹3,342) and Linear Regression (₹4,688). Across the folds the MAE varies by about ₹430, so the gap to Random Forest is small but consistent.</p>
+<p>Random Forest looks best on the easy random split, but Gradient Boosting wins once routes are held out. We chose Gradient Boosting because we trust the stricter tests more.</p>
+<figure><img src="images/feature_importance.png" alt="Feature importance"><figcaption>Travel class carries about 91% of the Random Forest's importance. Duration (4%) and days left (1%) come next.</figcaption></figure>
+</section>
+
+<section id="errors">
+<h2><span>7.</span>Errors</h2>
+<p><b>Interactive: how often is the model close enough?</b> Drag the slider to choose how far off you can accept the prediction to be.</p>
+<div class="demo">
+<div>Accept an error of up to <b id="tol">₹1,000</b></div>
+<input type="range" id="slider" min="0" max="40" value="4">
+<div class="big" id="pct"></div>
+<div id="pct-text"></div>
+<p class="note" style="margin-top:10px">Based on the 10,000 test flights in <code>results/prediction_errors.csv</code> (Random Forest, random split). The typical (median) miss is about ₹1,051.</p>
+</div>
+<table>
+<tr><th>Actual price</th><th>Flights</th><th>Average miss</th></tr>
+<tr><td>Under ₹5,000</td><td>2,598</td><td>₹770</td></tr>
+<tr><td>₹5,000 to 10,000</td><td>3,117</td><td>₹1,031</td></tr>
+<tr><td>₹10,000 to 20,000</td><td>1,065</td><td>₹2,172</td></tr>
+<tr><td>₹20,000 to 40,000</td><td>539</td><td>₹4,965</td></tr>
+<tr><td>Over ₹40,000</td><td>2,681</td><td>₹4,730</td></tr>
+</table>
+<p><b>Pattern:</b> absolute errors grow with price, so expensive flights are missed by thousands of rupees. In relative terms, Economy errors are larger (MAPE 18.0%, MAE ₹1,163) than Business (MAPE 9.0%, MAE ₹4,700).</p>
+<figure><img src="images/actual_vs_predicted.png" alt="Actual vs predicted prices"><figcaption>Points near the dashed line are accurate. The spread widens at high prices.</figcaption></figure>
+<figure><img src="images/class_wise_errors.png" alt="Errors by class"><figcaption>Error comparison between Economy and Business.</figcaption></figure>
+</section>
+
+<section id="limitations">
+<h2><span>8.</span>Limitations</h2>
+<ul>
+<li><b>Historical snapshot.</b> The data is not live. Real prices also depend on holidays, fuel costs, seats left and promotions, none of which are in the data.</li>
+<li><b>Limited coverage.</b> Only 6 metro cities, 6 airlines and 1 to 49 days before departure. Other routes and booking windows are outside what the model has seen.</li>
+<li><b>Arrival time shortcut on this website.</b> The model uses arrival time as a feature, but the fare predictor page asks only for departure time and sets arrival time equal to it, so website estimates can be less accurate than the reported scores.</li>
+<li><b>Scores depend on the split.</b> R² falls from about 0.97 (random split) to about 0.91 (held-out routes), so the easy test overstates real performance.</li>
+<li><b>Sampling.</b> Model comparisons use a 50,000-row sample. The final deployed model is trained on all rows, so it has no separate held-out score.</li>
+<li><b>Expensive flights.</b> Misses of ₹5,000 or more are common above ₹20,000.</li>
+</ul>
+</section>
+
+<section id="conclusion">
+<h2><span>9.</span>Conclusion</h2>
+<p>A Gradient Boosting model predicts domestic flight fares with an average error of about ₹3,200 (R² about 0.94) on unseen routes. That beats a median-by-class baseline (₹5,488 MAE on the same held-out-routes split) and Linear Regression. Travel class explains most of the price, and the extra features (duration, days left, airline) refine it. The estimates are useful for a rough budget, but they are not live airline prices.</p>
+<p><a href="predict.html"><b>Try the predictor →</b></a></p>
+</section>
+
+<section id="reproduce">
+<h2><span>10.</span>Reproduction steps</h2>
+<pre>git clone https://github.com/pellurusaranya-byte/Flight-fare-prediction.git
+cd Flight-fare-prediction
+python -m venv .venv
+.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+
+python notebooks/05_model_comparison.py      # random-split comparison
+python notebooks/10_robust_validation.py     # held-out routes
+python notebooks/11_group_cross_validation.py   # 5-fold route CV
+python notebooks/14_naive_baseline.py        # naive baseline
+python notebooks/12_train_final_model.py     # trains the final model
+
+python export_for_pages.py                   # updates the website's model files
+cd website &amp;&amp; python app.py                  # optional: run the Flask version</pre>
+<p>All outputs are saved in <code>results/</code>. The website in <code>docs/</code> runs the exported model in the browser, so it needs no server.</p>
+</section>
+
+</main>
+<footer>FlyWise · ES335 academic machine learning project · Estimates are not live airline prices.</footer>
+
+<script>
+const DATA = {
+  "Random split (50k sample)": {
+    "Naive baseline": null,
+    "Linear Regression": [4567.51, 6827.35, 0.9099],
+    "Random Forest": [2076.56, 3857.28, 0.9712],
+    "Gradient Boosting": [2323.88, 3997.86, 0.9691],
+    note: "On the easy random split, Random Forest looks best. But the same routes appear in training and testing, so these scores are optimistic."
+  },
+  "Held-out routes (single split)": {
+    "Naive baseline": [5488.00, 8871.62, 0.8118],
+    "Linear Regression": [5232.78, 7483.50, 0.8661],
+    "Random Forest": [3966.11, 6537.87, 0.8978],
+    "Gradient Boosting": [3679.47, 6170.79, 0.9089],
+    note: "When whole routes are hidden from training, every score gets worse and Gradient Boosting overtakes Random Forest. Linear Regression barely beats the naive baseline on MAE."
+  },
+  "5-fold route CV (mean)": {
+    "Naive baseline": null,
+    "Linear Regression": [4687.60, 6952.41, 0.9031],
+    "Random Forest": [3341.73, 5698.75, 0.9343],
+    "Gradient Boosting": [3162.73, 5395.86, 0.9411],
+    note: "The strictest test, averaged over 5 folds. Gradient Boosting is best on all three metrics, which is why it is the final model."
+  }
+};
+const METRICS = ["MAE (₹, lower is better)", "RMSE (₹, lower is better)", "R² (higher is better)"];
+let setup = Object.keys(DATA)[2], metric = 0;
+
+function radios(el, name, items, current, onPick) {
+  el.innerHTML = items.map((t, i) =>
+    `<label><input type="radio" name="${name}" value="${i}" ${t === current || i === current ? "checked" : ""}> ${t}</label>`).join("");
+  el.querySelectorAll("input").forEach(r => r.onchange = () => onPick(items[+r.value], +r.value));
+}
+function draw() {
+  const d = DATA[setup];
+  const names = Object.keys(d).filter(k => k !== "note" && d[k]);
+  const vals = names.map(n => d[n][metric]);
+  const isR2 = metric === 2;
+  const best = isR2 ? Math.max(...vals) : Math.min(...vals);
+  const lo = isR2 ? 0.75 : 0, hi = isR2 ? 1 : Math.max(...vals);
+  document.getElementById("bars").innerHTML = names.map((n, i) => {
+    const w = Math.max(3, (vals[i] - lo) / (hi - lo) * 100);
+    const txt = isR2 ? vals[i].toFixed(4) : "₹" + Math.round(vals[i]).toLocaleString("en-IN");
+    return `<div class="row ${vals[i] === best ? "best" : ""}"><div class="nm">${n}</div><div class="bar" style="width:${w * 0.55}%"></div><div>${txt}</div></div>`;
+  }).join("") + (isR2 ? '<div style="font-size:12px;color:#64748b">R² axis starts at 0.75 so differences are visible.</div>' : "");
+  document.getElementById("caption").textContent = d.note;
+}
+radios(document.getElementById("setup-opts"), "setup", Object.keys(DATA), setup, s => { setup = s; draw(); });
+radios(document.getElementById("metric-opts"), "metric", METRICS, 0, (_, i) => { metric = i; draw(); });
+draw();
+
+// Error tolerance slider: % of test flights with absolute error <= tolerance (steps of ₹250)
+const CDF = [0.2,16.3,28.5,38.5,47.9,56.5,62.4,66.5,69.7,73.0,75.1,77.3,79.1,80.6,82.2,83.3,84.2,85.0,85.9,86.7,87.5,88.2,88.8,89.2,89.5,90.0,90.6,91.0,91.4,91.8,92.3,92.6,93.0,93.4,93.6,94.0,94.3,94.7,95.0,95.4,95.6];
+const slider = document.getElementById("slider");
+function upd() {
+  const t = slider.value * 250, p = CDF[slider.value];
+  document.getElementById("tol").textContent = "₹" + t.toLocaleString("en-IN");
+  document.getElementById("pct").textContent = p.toFixed(1) + "%";
+  document.getElementById("pct-text").textContent = `of test flights were predicted within ₹${t.toLocaleString("en-IN")} of the real price (about ${Math.round(p / 10)} in 10).`;
+}
+slider.oninput = upd; upd();
+</script>
+</body>
+</html>
