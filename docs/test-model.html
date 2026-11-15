@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FlyWise Model Test</title>
+</head>
+<body>
+    <h2>FlyWise Prediction Test</h2>
+    <p id="status">Loading model...</p>
+
+    <script src="model.js"></script>
+
+    <script>
+        async function testModel() {
+            const flight = {
+                airline: "SpiceJet",
+                source_city: "Delhi",
+                destination_city: "Mumbai",
+                departure_time: "Evening",
+                arrival_time: "Night",
+                stops: "zero",
+                class: "Economy",
+                duration: 2.17,
+                days_left: 1
+            };
+
+            try {
+                const price = await predictFlyWise(flight);
+
+                document.getElementById("status").textContent =
+                    "JavaScript prediction: ₹" + price.toFixed(2);
+            } catch (error) {
+                document.getElementById("status").textContent =
+                    "Error: " + error.message;
+            }
+        }
+
+        testModel();
+    </script>
+</body>
+</html>
