@@ -1,5 +1,5 @@
 // FlyWise – runs completely in the browser (no Flask / server needed).
-// It loads two JSON files: options.json (dropdown choices) and model.json (the trained model).
+// It loads two JSON files: options.json (dropdown choices that exist in the data) and model.json (the trained model).
 
 document.addEventListener("DOMContentLoaded", async function () {
 
@@ -67,7 +67,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     function updateStops() {
         stops.value = "";
         resetDropdown(airline, "Select stops first");
-        resetDropdown(departure, "Select airline first");
+        resetDropdown(travelClass, "Select airline first");
+        resetDropdown(departure, "Select travel class first");
         resetDropdown(duration, "Select departure time first");
 
         if (!source.value || !destination.value) { stops.disabled = true; return; }
@@ -81,31 +82,44 @@ document.addEventListener("DOMContentLoaded", async function () {
         stops.disabled = false;
     }
 
+    // Each step below reads only the part of options.json that matches the earlier choices, so a
+    // visitor can only pick combinations that exist in the data (for example Business class
+    // exists only for Air India and Vistara, and not on every route).
+    const pick = (...keys) => keys.reduce((node, k) => (node || {})[k], options) || {};
+
     function updateAirlines() {
-        resetDropdown(departure, "Select airline first");
+        resetDropdown(travelClass, "Select airline first");
+        resetDropdown(departure, "Select travel class first");
         resetDropdown(duration, "Select departure time first");
-        const byStops = (options[source.value] || {})[destination.value] || {};
-        const airlines = Object.keys(byStops[stops.value] || {}).sort();
+        const airlines = Object.keys(pick(source.value, destination.value, stops.value)).sort();
         fill(airline, "Select an airline", airlines, n => n.replaceAll("_", " "));
         if (!airlines.length && stops.value) resetDropdown(airline, "No airlines available");
     }
 
+    function updateClasses() {
+        resetDropdown(departure, "Select travel class first");
+        resetDropdown(duration, "Select departure time first");
+        const classes = Object.keys(pick(source.value, destination.value, stops.value, airline.value)).sort();
+        fill(travelClass, "Select travel class", classes);
+    }
+
     function updateDepartureTimes() {
         resetDropdown(duration, "Select departure time first");
-        const byAirline = (((options[source.value] || {})[destination.value] || {})[stops.value] || {})[airline.value] || {};
-        const times = Object.keys(byAirline).sort((a, b) => timeOrder.indexOf(a) - timeOrder.indexOf(b));
+        const times = Object.keys(pick(source.value, destination.value, stops.value, airline.value, travelClass.value))
+            .sort((a, b) => timeOrder.indexOf(a) - timeOrder.indexOf(b));
         fill(departure, "Select departure time", times, t => timeLabels[t] || t);
     }
 
     function updateDurations() {
-        const byDeparture = ((((options[source.value] || {})[destination.value] || {})[stops.value] || {})[airline.value] || {})[departure.value] || [];
-        fill(duration, "Select flight duration", byDeparture, h => `${h} hours`);
+        const hours = pick(source.value, destination.value, stops.value, airline.value, travelClass.value, departure.value);
+        fill(duration, "Select flight duration", Array.isArray(hours) ? hours : [], h => `${h} hours`);
     }
 
     source.addEventListener("change", updateStops);
     destination.addEventListener("change", updateStops);
     stops.addEventListener("change", updateAirlines);
-    airline.addEventListener("change", updateDepartureTimes);
+    airline.addEventListener("change", updateClasses);
+    travelClass.addEventListener("change", updateDepartureTimes);
     departure.addEventListener("change", updateDurations);
 
     daysLeftInput.addEventListener("input", function () {
@@ -116,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
 
     // ---------- 4. THE MODEL (replaces model.predict in app.py) ----------
-    // Step A: turn the form into the same 37 numbers the model saw in training
+    // Step A: turn the form into the same 31 numbers the model saw in training
     //         (one-hot columns for each category, then scaled duration & days_left).
     function buildFeatures(f) {
         const x = [];
@@ -155,13 +169,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         destination.setCustomValidity("");
         if (!flightForm.checkValidity()) { flightForm.reportValidity(); return; }
 
+        // Safety net: only predict for a flight combination that exists in the data.
+        const dur = parseFloat(duration.value);
+        const known = pick(source.value, destination.value, stops.value, airline.value, travelClass.value, departure.value);
+        if (!Array.isArray(known) || !known.includes(dur)) {
+            errorBox.textContent = "That combination of airline, class, time and duration does not exist in our data, so no fare is estimated.";
+            errorBox.hidden = false;
+            return;
+        }
+
         const flight = {
             airline: airline.value,
             source_city: source.value,
             departure_time: departure.value,
             stops: stops.value,
-            // Same simplification as the original app.py: arrival time = departure time
-            arrival_time: departure.value,
             destination_city: destination.value,
             "class": travelClass.value,
             duration: parseFloat(duration.value),

@@ -29,7 +29,7 @@
 
             <h2>Predict Your Flight Price</h2>
 
-            <p>Enter your flight details to discover your estimated fare.</p>
+            <p>Enter your flight details to discover your estimated fare. Only flights that exist in our data can be selected.</p>
         </div>
 
         
@@ -110,36 +110,30 @@
                 </select>
             </div>
 
-            <!-- 5. DEPARTURE TIME -->
+            <!-- 5. TRAVEL CLASS (depends on route, stops and airline: Business exists only for some flights) -->
             <div class="form-group">
-                <label>Departure Time</label>
+                <label>Travel Class</label>
 
-                <select name="departure_time" id="departure_time" required disabled>
+                <select name="class" id="travel_class" required disabled>
                     <option value="">Select airline first</option>
                 </select>
             </div>
 
-            <!-- 6. FLIGHT DURATION -->
+            <!-- 6. DEPARTURE TIME -->
+            <div class="form-group">
+                <label>Departure Time</label>
+
+                <select name="departure_time" id="departure_time" required disabled>
+                    <option value="">Select travel class first</option>
+                </select>
+            </div>
+
+            <!-- 7. FLIGHT DURATION -->
             <div class="form-group">
                 <label>Flight Duration</label>
 
                 <select name="duration" id="duration" required disabled>
                     <option value="">Select departure time first</option>
-                </select>
-            </div>
-
-            <!-- 7. TRAVEL CLASS -->
-            <div class="form-group">
-                <label>Travel Class</label>
-
-                <select name="class" id="travel_class" required>
-
-                    <option value="">Select travel class</option>
-
-                    <option value="Economy">Economy</option>
-
-                    <option value="Business">Business</option>
-
                 </select>
             </div>
 

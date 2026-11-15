@@ -1,0 +1,11 @@
+route,airline,class,stops,departure_time,duration,days_left,actual,predicted,error,abs_error,pct_error
+Delhi-Mumbai,Vistara,Business,one,Evening,17.3,3,42893,80715.3,-37822.3,37822.3,88.2
+Delhi-Mumbai,Vistara,Business,one,Evening,20.3,3,42893,80699.1,-37806.1,37806.1,88.1
+Delhi-Mumbai,Vistara,Business,one,Evening,27.5,3,42893,79939.7,-37046.7,37046.7,86.4
+Delhi-Mumbai,Vistara,Business,one,Afternoon,25.6,3,33197,69801.3,-36604.3,36604.3,110.3
+Delhi-Mumbai,Vistara,Business,one,Evening,17.3,2,45133,81029.4,-35896.4,35896.4,79.5
+Delhi-Mumbai,Vistara,Business,one,Evening,20.3,2,45133,81013.2,-35880.2,35880.2,79.5
+Delhi-Mumbai,Vistara,Business,one,Evening,24.4,4,36565,71725.7,-35160.7,35160.7,96.2
+Delhi-Mumbai,Vistara,Business,one,Morning,5.2,5,29825,64931.9,-35106.9,35106.9,117.7
+Delhi-Hyderabad,Vistara,Business,two_or_more,Early_Morning,14.4,3,104987,69884.5,35102.5,35102.5,33.4
+Bangalore-Chennai,Vistara,Business,one,Night,12.8,45,90720,56755.5,33964.5,33964.5,37.4

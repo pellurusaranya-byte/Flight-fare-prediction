@@ -22,7 +22,6 @@ flight = pd.DataFrame([{
     "source_city": "Delhi",
     "departure_time": "Morning",
     "stops": "zero",
-    "arrival_time": "Afternoon",
     "destination_city": "Mumbai",
     "class": "Economy",
     "duration": 2.0,

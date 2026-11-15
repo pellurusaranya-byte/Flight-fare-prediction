@@ -1,0 +1,353 @@
+{
+ "selected": "Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)",
+ "test_routes": [
+  "Bangalore-Chennai",
+  "Delhi-Hyderabad",
+  "Delhi-Mumbai"
+ ],
+ "n_dev": 79544,
+ "n_test": 20456,
+ "folds_won_vs_rf": 4,
+ "test": [
+  {
+   "Model": "Linear Regression",
+   "MAE": 5254.7243,
+   "RMSE": 7518.6282,
+   "R2": 0.8642
+  },
+  {
+   "Model": "Random Forest",
+   "MAE": 3931.2147,
+   "RMSE": 6556.0304,
+   "R2": 0.8968
+  },
+  {
+   "Model": "Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)",
+   "MAE": 3609.0309,
+   "RMSE": 6079.2434,
+   "R2": 0.9113
+  },
+  {
+   "Model": "Baseline: median price by class",
+   "MAE": 5490.608,
+   "RMSE": 8855.8658,
+   "R2": 0.8117
+  },
+  {
+   "Model": "Baseline: median price by class and stops",
+   "MAE": 4534.1273,
+   "RMSE": 6948.0643,
+   "R2": 0.8841
+  }
+ ],
+ "per_class": [
+  {
+   "Class": "Business",
+   "Flights": 6940,
+   "MAE": 7960.3888149828135,
+   "RMSE": 9990.409033619948,
+   "R2": 0.2528349598173757,
+   "MAPE": 18.424701890629112
+  },
+  {
+   "Class": "Economy",
+   "Flights": 13516,
+   "MAE": 1374.7586557114785,
+   "RMSE": 2164.5651421797284,
+   "R2": 0.6774257022659398,
+   "MAPE": 23.53604615496953
+  }
+ ],
+ "per_route": [
+  {
+   "Route": "Bangalore-Chennai",
+   "Flights": 4414,
+   "MAE": 4104.944317495953,
+   "RMSE": 6238.327752496681,
+   "R2": 0.926289198120784
+  },
+  {
+   "Route": "Delhi-Hyderabad",
+   "Flights": 6026,
+   "MAE": 2080.833230237431,
+   "RMSE": 3502.8534464633813,
+   "R2": 0.9656512243957114
+  },
+  {
+   "Route": "Delhi-Mumbai",
+   "Flights": 10016,
+   "MAE": 4309.905261954789,
+   "RMSE": 7137.674569073384,
+   "R2": 0.8693019124445036
+  }
+ ],
+ "buckets": [
+  {
+   "bucket": "Under \u20b95,000",
+   "flights": 5448,
+   "mae": 916.4139273919332
+  },
+  {
+   "bucket": "\u20b95,000 to 10,000",
+   "flights": 6150,
+   "mae": 1204.4474775755968
+  },
+  {
+   "bucket": "\u20b910,000 to 20,000",
+   "flights": 1783,
+   "mae": 2646.2939946229108
+  },
+  {
+   "bucket": "\u20b920,000 to 40,000",
+   "flights": 1991,
+   "mae": 8076.190874830155
+  },
+  {
+   "bucket": "Over \u20b940,000",
+   "flights": 5084,
+   "mae": 7991.408945487098
+  }
+ ],
+ "median_abs_error": 1372.1320942872926,
+ "cdf": [
+  0.0,
+  8.5,
+  17.5,
+  28.3,
+  38.2,
+  46.7,
+  52.7,
+  56.7,
+  59.9,
+  62.1,
+  64.0,
+  65.9,
+  67.2,
+  68.5,
+  70.0,
+  71.3,
+  72.4,
+  73.5,
+  74.7,
+  75.7,
+  76.6,
+  77.4,
+  78.1,
+  78.8,
+  79.5,
+  80.3,
+  81.2,
+  82.0,
+  82.8,
+  83.6,
+  84.3,
+  84.9,
+  85.3,
+  85.8,
+  86.2,
+  86.6,
+  87.0,
+  87.4,
+  87.9,
+  88.4,
+  88.8
+ ],
+ "worst": [
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Evening",
+   "duration": 17.0,
+   "days_left": 3,
+   "actual": 42893,
+   "predicted": 80715.0,
+   "error": -37822.0,
+   "abs_error": 37822.0,
+   "pct_error": 88.0,
+   "bucket": "Over \u20b940,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Evening",
+   "duration": 20.0,
+   "days_left": 3,
+   "actual": 42893,
+   "predicted": 80699.0,
+   "error": -37806.0,
+   "abs_error": 37806.0,
+   "pct_error": 88.0,
+   "bucket": "Over \u20b940,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Evening",
+   "duration": 28.0,
+   "days_left": 3,
+   "actual": 42893,
+   "predicted": 79940.0,
+   "error": -37047.0,
+   "abs_error": 37047.0,
+   "pct_error": 86.0,
+   "bucket": "Over \u20b940,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Afternoon",
+   "duration": 26.0,
+   "days_left": 3,
+   "actual": 33197,
+   "predicted": 69801.0,
+   "error": -36604.0,
+   "abs_error": 36604.0,
+   "pct_error": 110.0,
+   "bucket": "\u20b920,000 to 40,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Evening",
+   "duration": 17.0,
+   "days_left": 2,
+   "actual": 45133,
+   "predicted": 81029.0,
+   "error": -35896.0,
+   "abs_error": 35896.0,
+   "pct_error": 80.0,
+   "bucket": "Over \u20b940,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Evening",
+   "duration": 20.0,
+   "days_left": 2,
+   "actual": 45133,
+   "predicted": 81013.0,
+   "error": -35880.0,
+   "abs_error": 35880.0,
+   "pct_error": 79.0,
+   "bucket": "Over \u20b940,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Evening",
+   "duration": 24.0,
+   "days_left": 4,
+   "actual": 36565,
+   "predicted": 71726.0,
+   "error": -35161.0,
+   "abs_error": 35161.0,
+   "pct_error": 96.0,
+   "bucket": "\u20b920,000 to 40,000"
+  },
+  {
+   "route": "Delhi-Mumbai",
+   "airline": "Vistara",
+   "class": "Business",
+   "stops": "one",
+   "departure_time": "Morning",
+   "duration": 5.0,
+   "days_left": 5,
+   "actual": 29825,
+   "predicted": 64932.0,
+   "error": -35107.0,
+   "abs_error": 35107.0,
+   "pct_error": 118.0,
+   "bucket": "\u20b920,000 to 40,000"
+  }
+ ],
+ "random_split": [
+  {
+   "Model": "Linear Regression",
+   "MAE": 4517.0605,
+   "RMSE": 6700.0325,
+   "R2": 0.9128
+  },
+  {
+   "Model": "Random Forest",
+   "MAE": 1895.2838,
+   "RMSE": 3545.0122,
+   "R2": 0.9756
+  },
+  {
+   "Model": "Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)",
+   "MAE": 2440.1962,
+   "RMSE": 4144.8342,
+   "R2": 0.9666
+  },
+  {
+   "Model": "Baseline: median price by class",
+   "MAE": 4722.7404,
+   "RMSE": 7776.1605,
+   "R2": 0.8826
+  }
+ ],
+ "cv": [
+  {
+   "Model": "Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)",
+   "MAE_mean": 3111.0664,
+   "MAE_std": 410.8284,
+   "RMSE_mean": 5323.8911,
+   "R2_mean": 0.9468,
+   "R2_std": 0.0115
+  },
+  {
+   "Model": "Gradient Boosting (C: 31 leaves, lr 0.05, 300 it)",
+   "MAE_mean": 3141.6372,
+   "MAE_std": 413.2463,
+   "RMSE_mean": 5369.6923,
+   "R2_mean": 0.9459,
+   "R2_std": 0.0118
+  },
+  {
+   "Model": "Gradient Boosting (A: 31 leaves, lr 0.1, 150 it)",
+   "MAE_mean": 3148.1612,
+   "MAE_std": 416.6404,
+   "RMSE_mean": 5387.5466,
+   "R2_mean": 0.9456,
+   "R2_std": 0.0115
+  },
+  {
+   "Model": "Random Forest",
+   "MAE_mean": 3465.2466,
+   "MAE_std": 418.0928,
+   "RMSE_mean": 5895.4121,
+   "R2_mean": 0.9349,
+   "R2_std": 0.0145
+  },
+  {
+   "Model": "Linear Regression",
+   "MAE_mean": 4516.541,
+   "MAE_std": 266.4288,
+   "RMSE_mean": 6794.4132,
+   "R2_mean": 0.9138,
+   "R2_std": 0.0125
+  },
+  {
+   "Model": "Baseline: median price by class",
+   "MAE_mean": 4784.8736,
+   "MAE_std": 313.6454,
+   "RMSE_mean": 7851.9235,
+   "R2_mean": 0.8853,
+   "R2_std": 0.013
+  }
+ ]
+}

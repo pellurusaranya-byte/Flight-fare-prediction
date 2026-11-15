@@ -31,17 +31,31 @@ The project explores and compares three regression algorithms:
 2. Random Forest Regressor
 3. Gradient Boosting Regressor
 
-Gradient Boosting was selected as the final model based on the model evaluation and validation results.
+Gradient Boosting was selected by cross-validation on 12 city pairs, then scored **once** on 3 city pairs that were never used for selection or tuning.
 
-### Model Evaluation
+### Model Evaluation (final test: 3 unseen routes)
 
 | Model | MAE | RMSE | R² Score |
 |---|---:|---:|---:|
-| Gradient Boosting | ₹3,162.73 | ₹5,395.86 | 0.9411 |
-| Random Forest | ₹3,341.73 | ₹5,698.75 | 0.9343 |
-| Linear Regression | ₹4,687.60 | ₹6,952.41 | 0.9031 |
+| Gradient Boosting (final model) | ₹3,609 | ₹6,079 | 0.911 |
+| Random Forest | ₹3,931 | ₹6,556 | 0.897 |
+| Linear Regression | ₹5,255 | ₹7,519 | 0.864 |
+| Baseline: median by class and stops | ₹4,534 | ₹6,948 | 0.884 |
+| Baseline: median by class | ₹5,491 | ₹8,856 | 0.812 |
 
-*These are GroupKFold validation results. MAE and RMSE are in Indian Rupees.*
+*Final test = Bangalore–Chennai, Delhi–Hyderabad and Delhi–Mumbai (20,456 flights from a 100,000-row sample). MAE and RMSE are in Indian Rupees. Within Business class the model explains only about a quarter of the price variation (R² 0.25), so most of the headline R² comes from separating Economy from Business. See the project report for the full evaluation, error analysis and limitations.*
+
+### Reproduce the results
+
+```bash
+pip install -r requirements.txt
+python notebooks/15_final_evaluation.py   # CV on 12 routes, one-shot test on 3 routes, baselines, errors
+python notebooks/16_error_figures.py      # report figures
+python notebooks/12_train_final_model.py  # final model trained on all rows
+python export_for_pages.py                # exports model + dropdown options to docs/data/
+```
+
+Notebooks 01 to 11 and 14 are earlier exploratory experiments (they use arrival time and a different split) and are superseded by notebook 15.
 
 ## 📂 Project Structure
 
@@ -57,12 +71,17 @@ FlyWise/
 │   └── other trained models
 │
 ├── notebooks/
-│   └── model development and evaluation scripts
+│   └── model development and evaluation scripts (15 = final evaluation)
 │
 ├── results/
 │   └── evaluation graphs and result files
 │
-├── website/
+├── docs/                      (static site published on GitHub Pages)
+│   ├── index.html, predict.html, report.html
+│   ├── script.js, style.css
+│   └── data/ (model.json, options.json)
+│
+├── website/                   (older Flask version, optional)
 │   ├── app.py
 │   ├── static/
 │   │   ├── style.css
@@ -100,7 +119,7 @@ Activate it on Windows PowerShell:
 ### 3. Install dependencies
 
 ```bash
-pip install flask pandas numpy scikit-learn joblib
+pip install -r requirements.txt
 ```
 
 ### 4. Run the application
@@ -126,7 +145,6 @@ The features include:
 - Source city
 - Destination city
 - Departure time
-- Arrival time
 - Number of stops
 - Flight duration
 - Travel class

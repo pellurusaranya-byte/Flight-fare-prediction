@@ -28,7 +28,8 @@ print("Dataset after removing unnecessary columns:", df.shape)
 
 
 # 4. Separate input features and target
-X = df.drop(columns=["price"])
+# arrival_time is NOT used: it is not something a user supplies when searching for a fare.
+X = df.drop(columns=["price", "arrival_time"])
 y = df["price"]
 
 
@@ -38,7 +39,6 @@ categorical_columns = [
     "source_city",
     "departure_time",
     "stops",
-    "arrival_time",
     "destination_city",
     "class"
 ]
@@ -69,11 +69,12 @@ preprocessor = ColumnTransformer(
 )
 
 
-# 7. Create the selected Gradient Boosting model
+# 7. Create the Gradient Boosting model selected by cross-validation in 15_final_evaluation.py
+#    (setting B: 15 leaves, learning rate 0.1, 150 iterations)
 gradient_boosting = HistGradientBoostingRegressor(
     max_iter=150,
     learning_rate=0.1,
-    max_leaf_nodes=31,
+    max_leaf_nodes=15,
     l2_regularization=1.0,
     random_state=42
 )
