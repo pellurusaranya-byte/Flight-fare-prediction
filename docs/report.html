@@ -75,7 +75,7 @@ td small{color:var(--muted)}
 
 <section id="data">
 <h2><span>2.</span>Data</h2>
-<p>The Kaggle "Flight Price Prediction" dataset by Shubham Bathwal (<code>Clean_Dataset.csv</code>). According to its description, the listings were collected from a flight booking website over roughly 50 days in 2022. It is a free download; the licence terms are on the dataset's Kaggle page, and we use it only for this coursework. The file is also kept in <code>data/</code> of the repository so the project runs without a download.</p>
+<p>The Kaggle "Flight Price Prediction" dataset by Shubham Bathwal (<code>Clean_Dataset.csv</code>). According to the dataset page, the listings were scraped from the EaseMyTrip booking website over 50 days, from 11 February to 31 March 2022, with Economy and Business collected separately and then merged. The licence is CC0 (Public Domain), so it is free to use and share. The file is also kept in <code>data/</code> of the repository so the project runs without a download.</p>
 <table>
 <tr><th>Column</th><th>Type</th><th>Meaning</th></tr>
 <tr><td>airline, source_city, destination_city</td><td>category</td><td>Who flies, and between which cities</td></tr>
@@ -193,7 +193,7 @@ td small{color:var(--muted)}
 <section id="limitations">
 <h2><span>8.</span>Limitations</h2>
 <ul>
-<li><b>Historical snapshot.</b> The data covers about 50 days in 2022 and is not live. Real prices also depend on holidays, fuel costs, seats left and promotions, none of which are in the data.</li>
+<li><b>Historical snapshot.</b> The data was scraped over 50 days (11 February to 31 March 2022) from one booking site and is not live. These are listed prices, not what travellers finally paid. Real prices also depend on holidays, fuel costs, seats left and promotions, none of which are in the data.</li>
 <li><b>Limited coverage.</b> Only 6 metro cities, 6 airlines and 1 to 49 days before departure. The website only allows combinations that exist in the data, for example Business only for Air India and Vistara, and only where those listings exist.</li>
 <li><b>Prediction is not causation.</b> The importance chart and any pattern in days left describe what the model uses, not what drives prices. We make no claim that booking earlier would lower a fare.</li>
 <li><b>Weak inside Business class.</b> R² within Business is only 0.25 on unseen routes, and the model leans towards over-predicting it. Treat Business estimates as rough.</li>
