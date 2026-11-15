@@ -1,11 +1,11 @@
-# ✈️ FlyWise – Flight Fare Prediction
+# FlyWise – Flight Fare Prediction
 
-🔗 **Live demo:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/  
-📄 **Project report:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/report.html
+ **Live demo:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/  
+ **Project report:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/report.html
 
 **FlyWise** is a machine-learning-based web application that predicts domestic flight ticket prices in India based on flight search details. It helps users estimate airfare before booking their journey.
 
-## 🌟 Features
+## Features
 
 - Predict estimated flight fares using machine learning.
 - Select source and destination cities.
@@ -14,7 +14,7 @@
 - Simple and interactive web interface.
 - Data analysis and model evaluation visualizations.
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 - **Python** – Programming language
 - **Flask** – Web application framework
@@ -23,7 +23,7 @@
 - **Joblib** – Saving and loading trained models
 - **HTML, CSS, JavaScript** – Frontend development
 
-## 🤖 Machine Learning Models
+##  Machine Learning Models
 
 The project explores and compares three regression algorithms:
 
@@ -57,7 +57,7 @@ python export_for_pages.py                # exports model + dropdown options to 
 
 Notebooks 01 to 11 and 14 are earlier exploratory experiments (they use arrival time and a different split) and are superseded by notebook 15.
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 FlyWise/
@@ -95,7 +95,7 @@ FlyWise/
 └── README.md
 ```
 
-## ⚙️ Installation and Setup
+##  Installation and Setup
 
 ### 1. Clone the repository
 
@@ -135,7 +135,7 @@ Open the following address in your browser:
 http://127.0.0.1:5000/
 ```
 
-## 📊 Dataset
+## Dataset
 
 The project uses a dataset containing approximately 300,153 domestic flight records.
 
@@ -152,11 +152,11 @@ The features include:
 
 The target variable is the flight ticket price.
 
-## ⚠️ Disclaimer
+##  Disclaimer
 
 FlyWise provides estimated flight fares based on historical data and machine learning predictions. These estimates are not live airline prices and may differ from actual booking prices.
 
-## 🚀 Future Improvements
+##  Future Improvements
 
 - Integrate live flight fare APIs.
 - Deploy the application online.
