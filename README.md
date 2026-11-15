@@ -81,7 +81,7 @@ FlyWise/
 │   ├── script.js, style.css
 │   └── data/ (model.json, options.json)
 │
-├── website/                   (older Flask version, optional)
+├── website/                  
 │   ├── app.py
 │   ├── static/
 │   │   ├── style.css
