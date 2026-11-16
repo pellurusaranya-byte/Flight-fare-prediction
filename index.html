@@ -47,8 +47,8 @@ td small{color:var(--muted)}
 <body>
 <nav>
 <b>✈ FlyWise</b>
-<a href="predict.html">Predict a fare</a>
-<a href="#question">Question</a><a href="#data">Data</a><a href="#preprocessing">Preprocessing</a><a href="#methods">Methods</a><a href="#evaluation">Evaluation</a><a href="#results">Results</a><a href="#errors">Errors</a><a href="#limitations">Limitations</a><a href="#conclusion">Conclusion</a><a href="#reproduce">Reproduce</a>
+<a href="predict.html">Predict a fare</a><a href="explore.html">Explore fares</a>
+<a href="#question">Question</a><a href="#data">Data</a><a href="#preprocessing">Preprocessing</a><a href="#methods">Methods</a><a href="#evaluation">Evaluation</a><a href="#results">Results</a><a href="#errors">Errors</a><a href="#limitations">Limitations</a><a href="#conclusion">Conclusion</a><a href="#changes">Proposal changes</a><a href="#reproduce">Reproduce</a>
 </nav>
 
 <header>
@@ -200,6 +200,7 @@ td small{color:var(--muted)}
 <li><b>Random split is optimistic.</b> R² falls from 0.976 to 0.897 for Random Forest once routes are held out.</li>
 <li><b>Sampling and the deployed model.</b> Experiments use a 100,000-row sample. The deployed model uses the chosen settings trained on all rows, so it has no separate held-out score; the final-test result is our estimate of how that recipe performs.</li>
 <li><b>Small tuning search.</b> Only three Gradient Boosting settings were compared, and a larger search could change the ranking.</li>
+<li><b>Proposal items not tested.</b> A log(price) target, Ridge regression and a split grouped by flight code were planned but not run (see section 10), so we cannot say how they would change the results.</li>
 <li><b>Website approximations.</b> Durations in the dropdown are rounded to half an hour, and arrival time is not an input.</li>
 </ul>
 </section>
@@ -210,8 +211,25 @@ td small{color:var(--muted)}
 <p><a href="predict.html"><b>Try the predictor →</b></a></p>
 </section>
 
+<section id="changes">
+<h2><span>10.</span>Changes from the proposal</h2>
+<p>The submitted proposal planned some things differently from what the final project does. Each difference is listed here with the reason, so the report can be judged against the proposal.</p>
+<table>
+<tr><th>Proposal</th><th>Final project</th><th>Why</th></tr>
+<tr><td>Hold out about 20% of flights <b>grouped by flight code</b>; tune with GroupKFold on the rest.</td><td>Hold out <b>3 of the 15 city pairs</b> (20,456 rows, about a fifth of the sample) for one final test; 4-fold GroupKFold over the other 12 pairs.</td><td>A traveller can ask about a route the model has seen little of, so holding out whole routes is a stricter and more realistic test. It also keeps every copy of a flight on a route (all its days-left listings) on the same side, which is the leakage the proposal was concerned about. <b>Caveat:</b> in this data one flight code can appear on up to 9 city pairs, so this is not identical to grouping by flight code. Scores for a flight-code split were not computed.</td></tr>
+<tr><td>Baseline: median price per class × source × destination.</td><td>Two baselines: median by class, and median by class and stops.</td><td>With whole routes held out, a route-level median does not exist for the test routes. The baselines therefore use only information that is also available for unseen routes.</td></tr>
+<tr><td>Ridge regression.</td><td>Plain Linear Regression.</td><td>Kept as the simplest linear reference. Ridge was <b>not run</b>, so its effect is untested.</td></tr>
+<tr><td>Model log(price).</td><td>Model the price in rupees directly.</td><td>MAE and RMSE then read directly in rupees. A log target was <b>not tried</b>, so we do not know whether it would help Economy fares.</td></tr>
+<tr><td>Metrics: MAE, MdAPE, RMSE, R².</td><td>MAE, RMSE and R² in the results; MdAPE added from the saved final-test predictions: <b>17.8% overall</b> (Economy 19.3%, Business 15.7%).</td><td>MdAPE was not part of the main comparison table. It is computed afterwards by <code>notebooks/17_mdape.py</code> and saved in <code>results/final_test_mdape.csv</code>.</td></tr>
+<tr><td>Use the arrival time slot as a variable.</td><td>Arrival time is not used.</td><td>It is not something a user enters when searching for a fare, and the website model must use the same inputs as the experiments.</td></tr>
+<tr><td>Use all 300,153 rows.</td><td>Experiments use a 100,000-row random sample (seed 42). The deployed model is trained on all rows.</td><td>Keeps every script fast enough to rerun on a laptop.</td></tr>
+<tr><td>Interactive explorer: pick route, airline, class and stops, move a 1 to 49 day slider, see the model's price curve next to the baseline, and toggle random vs flight-grouped scores.</td><td>The <a href="predict.html">Predict a fare</a> page gives a model estimate for any combination in the data. The <a href="explore.html">Explore fares</a> page shows historical average prices. This report has the split and metric toggles (section 6) and the error-tolerance slider (section 7).</td><td>The model-vs-baseline curve over days left and the flight-grouped toggle were <b>not built</b> in the time available. The report toggle compares a random split with a route split instead.</td></tr>
+</table>
+<p class="note">Naming: the proposal says HistGradientBoosting; this report calls the same scikit-learn <code>HistGradientBoostingRegressor</code> model "Gradient Boosting". The research question is unchanged. The question about keeping the same flight out of training is answered with a route-level hold-out, as explained in the first row.</p>
+</section>
+
 <section id="reproduce">
-<h2><span>10.</span>Reproduction steps</h2>
+<h2><span>11.</span>Reproduction steps</h2>
 <p><b>Data:</b> <code>data/Clean_Dataset.csv</code> is included. To fetch it again, download "Flight Price Prediction" (Shubham Bathwal) from Kaggle and save the CSV at that path. <b>Environment:</b> Python 3.11 or newer, libraries pinned in <code>requirements.txt</code> (the results here were produced with scikit-learn 1.9.1). Every random step uses seed 42: the 100,000-row sample, the final-test route split (3 of 15 city pairs, <code>GroupShuffleSplit</code>), the models and the permutation importance. Different library versions may shift the numbers slightly.</p>
 <pre>git clone https://github.com/pellurusaranya-byte/Flight-fare-prediction.git
 cd Flight-fare-prediction
@@ -221,6 +239,7 @@ pip install -r requirements.txt
 
 python notebooks/15_final_evaluation.py      # CV on 12 routes, one-shot test on 3 routes, baselines, errors
 python notebooks/16_error_figures.py         # report figures for the held-out routes
+python notebooks/17_mdape.py                 # MdAPE on the final test routes
 python notebooks/12_train_final_model.py     # trains the final model on all rows
 python export_for_pages.py                   # exports the model and dropdown options to docs/data/</pre>
 <p>Outputs are saved in <code>results/</code> (for example <code>final_test_results.csv</code>, <code>cv_summary.csv</code>, <code>worst_predictions.csv</code>). The website in <code>docs/</code> runs the exported model in the browser, so it needs no server. Notebooks 01 to 11 and 14 are earlier exploratory experiments (they still use arrival time and a different split) and are not the source of the numbers on this page.</p>
