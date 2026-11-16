@@ -1,0 +1,4 @@
+group,rows,MdAPE_pct,mean_APE_pct
+All test flights,20456,17.8,21.8
+Business,6940,15.7,18.4
+Economy,13516,19.3,23.5
