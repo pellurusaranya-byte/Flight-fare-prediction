@@ -1,0 +1,134 @@
+# FlyWise – Predicting Indian Domestic Flight Prices
+
+ES 335 course project (Machine Learning), IIT Gandhinagar. Author: Saranya Pelluru (25110237).
+
+- **Website and project report:** https://pellurusaranya-byte.github.io/Flight-fare-prediction/
+- **Repository:** https://github.com/pellurusaranya-byte/Flight-fare-prediction
+
+The website is the main write-up: it explains the question, data, preprocessing, models, evaluation, results, errors and limitations, with interactive charts. This repository holds the code, data and result files needed to check and reproduce everything on it.
+
+## Research question
+
+How well can the price of a domestic Indian flight ticket be estimated from information a traveller sees when searching (airline, route, class, stops, departure time, duration and days left before departure), and which of these factors explain most of the variation in price? We also test whether the reported accuracy still holds when flights are kept out of training.
+
+One row of the data is one fare listing for a specific flight and class on a route, observed a given number of days before departure. The claim is about estimation and association only, not about causes (for example, not that booking earlier lowers a fare).
+
+## Main result
+
+Models were compared on **3 city pairs that were never used for selection or tuning** (Bangalore–Chennai, Delhi–Hyderabad, Delhi–Mumbai; 20,456 listings). Errors are in Indian rupees.
+
+| Model | MAE | RMSE | R² |
+|---|---:|---:|---:|
+| Gradient Boosting (final model) | ₹3,609 | ₹6,079 | 0.911 |
+| Random Forest | ₹3,931 | ₹6,556 | 0.897 |
+| Linear Regression | ₹5,255 | ₹7,519 | 0.864 |
+| Baseline: median by class and stops | ₹4,534 | ₹6,948 | 0.884 |
+| Baseline: median by class | ₹5,491 | ₹8,856 | 0.812 |
+
+Median absolute percentage error of the final model on the same routes is 17.8% (Economy 19.3%, Business 15.7%). Inside Business class the model explains only about a quarter of the price variation (R² 0.25), so most of the headline R² comes from separating Economy from Business. The report has the full error analysis and limitations.
+
+## Data access
+
+- **Source:** Kaggle dataset "Flight Price Prediction" by Shubham Bathwal, scraped from the EaseMyTrip booking website (https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction). It is free to download with a Kaggle account.
+- **Included copy:** `data/Clean_Dataset.csv` (300,153 rows, 1,561 distinct flight codes, 6 metro cities, collected 11 Feb to 31 Mar 2022). To fetch it again, download the dataset from Kaggle and save `Clean_Dataset.csv` at that path.
+- **Columns used:** airline, source city, destination city, departure time slot, stops, duration, class, days left, and price (the target). The index column and the flight code are dropped; the arrival time slot is not used because a traveller does not enter it when searching (see "Changes from the proposal").
+
+## Setup and reproduction
+
+Requires Python 3.11 or newer. Library versions are pinned in `requirements.txt`.
+
+```bash
+git clone https://github.com/pellurusaranya-byte/Flight-fare-prediction.git
+cd Flight-fare-prediction
+python -m venv .venv
+.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+
+python notebooks/15_final_evaluation.py   # cross-validation, one-shot final test, baselines, errors
+python notebooks/16_error_figures.py      # report figures for the held-out routes
+python notebooks/17_mdape.py              # median absolute percentage error on the final test
+python notebooks/12_train_final_model.py  # final model trained on all rows
+python export_for_pages.py                # exports the model and dropdown options to docs/data/
+```
+
+Outputs are written to `results/` (for example `final_test_results.csv`, `cv_summary.csv`, `final_test_per_class.csv`, `final_test_mdape.csv`, `final_test_predictions.csv`).
+
+### Exact preprocessing and splits
+
+Everything below is in `notebooks/15_final_evaluation.py` and uses random seed 42.
+
+1. Take a random sample of 100,000 rows (`df.sample(n=100_000, random_state=42)`).
+2. Define the route of a listing as the sorted pair of its source and destination city (15 routes).
+3. **Final test:** `GroupShuffleSplit(test_size=3/15, random_state=42)` on the route. This holds out 3 whole routes (Bangalore–Chennai, Delhi–Hyderabad, Delhi–Mumbai). They are used once, after the model was chosen.
+4. **Model selection:** `GroupKFold(n_splits=4)` over the remaining 12 routes, where each fold hides 3 whole routes.
+5. **Preprocessing** is inside a scikit-learn pipeline and fitted on training data only: one-hot encoding of the categorical columns and standard scaling of the numeric columns (duration, days left).
+6. For comparison, the same models are also scored on a naive random 80/20 split of rows, to show how much that inflates the scores.
+
+The deployed model (`models/gradient_boosting_final.joblib`, trained by notebook 12) uses the chosen settings on all 300,153 rows, so it has no separate held-out score; the final-test table above is the estimate for that recipe.
+
+Notebooks 01 to 11 and 14 are earlier exploratory experiments (some use arrival time and a different split). They are kept for transparency and are superseded by notebook 15.
+
+## Changes from the proposal
+
+The submitted proposal planned some things differently. The full table with reasons is in section 10 of the report. In short:
+
+- The final test holds out whole **city pairs** instead of whole flight codes. Scores for a flight-code split were not computed.
+- Baselines are the median by class, and the median by class and stops, because a route-level median does not exist for unseen routes.
+- Plain Linear Regression was used; **Ridge, and a log(price) target, were not run.**
+- MdAPE was computed afterwards from the saved predictions (`notebooks/17_mdape.py`).
+- The arrival time slot is not used. Experiments use a 100,000-row sample; the deployed model uses all rows.
+- The interactive "model curve vs baseline over 1 to 49 days left" explorer and the flight-grouped toggle were **not built**. The site has a fare predictor, a historical fare explorer, a split and metric toggle, and an error-tolerance slider instead.
+
+## Repository structure
+
+```text
+data/                  Clean_Dataset.csv
+models/                trained models (gradient_boosting_final.joblib is the deployed one)
+notebooks/             numbered scripts; 15 = final evaluation, 12 = final model
+results/               result tables, figures and the final-test predictions
+docs/                  static website published on GitHub Pages
+  index.html           project report (landing page)
+  predict.html         fare predictor (runs the exported model in the browser)
+  explore.html         historical fare explorer
+  data/                model.json, options.json, explorer.json
+website/               original Flask version of the predictor (optional)
+export_for_pages.py    exports the model to docs/data/
+export_explorer_data.py  builds docs/data/explorer.json
+export_model.py, check_class_accuracy.py   helper scripts
+requirements.txt
+```
+
+### Optional: run the Flask version locally
+
+```bash
+cd website
+python app.py
+```
+
+Then open http://127.0.0.1:5000/. The GitHub Pages site in `docs/` does the same thing in the browser and needs no server.
+
+## AI-use disclosure
+
+I used Claude (Anthropic's AI assistant) while building this project, for:
+
+- helping write and debug the Python scripts and the website code, including converting the Flask app into the static GitHub Pages site;
+- drafting and editing the wording of the report and this README;
+- checking the finished project against my submitted proposal and the course rubric.
+
+All numbers in the report and README come from the scripts in this repository and can be regenerated by running them as described above. The research question, dataset and project design come from my own proposal.
+
+## Citations
+
+- Bathwal, S. *Flight Price Prediction* (dataset), Kaggle. https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction
+- Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. *Journal of Machine Learning Research*, 12, 2825–2830.
+- Breiman, L. (2001). Random Forests. *Machine Learning*, 45(1), 5–32.
+- Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. *Annals of Statistics*, 29(5), 1189–1232.
+- McKinney, W. (2010). Data structures for statistical computing in Python. *Proceedings of the 9th Python in Science Conference*, 56–61.
+- Harris, C. R. et al. (2020). Array programming with NumPy. *Nature*, 585, 357–362.
+- Hunter, J. D. (2007). Matplotlib: a 2D graphics environment. *Computing in Science & Engineering*, 9(3), 90–95.
+- Waskom, M. L. (2021). seaborn: statistical data visualization. *Journal of Open Source Software*, 6(60), 3021.
+- Chart.js (https://www.chartjs.org/) draws the charts on the explorer page.
+
+## Disclaimer
+
+FlyWise gives estimates based on a historical snapshot of listed prices from one booking site (Feb–Mar 2022). They are not live airline prices and may differ from what travellers actually pay.
