@@ -47,8 +47,10 @@ pip install -r requirements.txt
 python notebooks/15_final_evaluation.py   # cross-validation, one-shot final test, baselines, errors
 python notebooks/16_error_figures.py      # report figures for the held-out routes
 python notebooks/17_mdape.py              # median absolute percentage error on the final test
+python notebooks/18_ridge_and_log_target.py  # follow-up: Ridge and log(price) target
 python notebooks/12_train_final_model.py  # final model trained on all rows
 python export_for_pages.py                # exports the model and dropdown options to docs/data/
+python export_explorer_data.py            # builds docs/data/explorer.json for the Explore fares page
 ```
 
 Outputs are written to `results/` (for example `final_test_results.csv`, `cv_summary.csv`, `final_test_per_class.csv`, `final_test_mdape.csv`, `final_test_predictions.csv`).
@@ -66,7 +68,7 @@ Everything below is in `notebooks/15_final_evaluation.py` and uses random seed 4
 
 The deployed model (`models/gradient_boosting_final.joblib`, trained by notebook 12) uses the chosen settings on all 300,153 rows, so it has no separate held-out score; the final-test table above is the estimate for that recipe.
 
-Notebooks 01 to 11 and 14 are earlier exploratory experiments (some use arrival time and a different split). They are kept for transparency and are superseded by notebook 15.
+Notebooks 01 to 11 and 14 are earlier exploratory experiments (some use arrival time and a different split). They are kept for transparency and are superseded by notebook 15. Their outputs are in `results/exploratory/`, and their numbers (for example the baseline on a 50,000-row sample) differ from the report. The report figures are the notebook 01 plots (`price_distribution.png`, `class_prices.png`, in `results/exploratory/`) and the notebook 16 plots (in `results/`); `docs/images/` holds copies.
 
 ## Changes from the proposal
 
@@ -85,7 +87,8 @@ The submitted proposal planned some things differently. The full table with reas
 data/                  Clean_Dataset.csv
 models/                trained models (gradient_boosting_final.joblib is the deployed one)
 notebooks/             numbered scripts; 15 = final evaluation, 12 = final model
-results/               result tables, figures and the final-test predictions
+results/               result tables, figures and the final-test predictions (notebooks 15 to 18)
+  exploratory/         outputs of the superseded notebooks 01 to 11 and 14
 docs/                  static website published on GitHub Pages
   index.html           project report (landing page)
   predict.html         fare predictor (runs the exported model in the browser)
@@ -94,13 +97,19 @@ docs/                  static website published on GitHub Pages
 website/               original Flask version of the predictor (optional)
 export_for_pages.py    exports the model to docs/data/
 export_explorer_data.py  builds docs/data/explorer.json
-export_model.py, check_class_accuracy.py   helper scripts
+check_class_accuracy.py   helper script
 requirements.txt
 ```
 
 ## AI-use disclosure
 
 I used Python, pandas, NumPy, scikit-learn and Matplotlib for the analysis, VS code, and GitHub Pages to host this site. I used an AI assistant (Claude) for planning the project, writing and debugging some of the code (the evaluation scripts, error analysis, the Ridge and log-target follow-up, and the JSON export for the web page), for editing the report text, and for guidance and code while building this web page. I ran and checked the code and outputs myself, and I am responsible for every result. The data is the public CC0 Kaggle “Flight Price Prediction” dataset by Shubham Bathwal. It contains no personal information, and the repository contains no passwords or API keys.
+
+## References
+
+- Bathwal, S. *Flight Price Prediction*, Kaggle dataset (CC0): https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction
+- Pedregosa, F. et al. (2011). Scikit-learn: Machine Learning in Python. *Journal of Machine Learning Research* 12, 2825–2830.
+- pandas, NumPy, Matplotlib and seaborn for data handling and figures; Chart.js for the Explore fares charts.
 
 ## Note
 
