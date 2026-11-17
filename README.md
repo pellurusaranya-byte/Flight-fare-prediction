@@ -72,12 +72,12 @@ Notebooks 01 to 11 and 14 are earlier exploratory experiments (some use arrival 
 
 The submitted proposal planned some things differently. The full table with reasons is in section 10 of the report. In short:
 
-- The final test holds out whole **city pairs** instead of whole flight codes. Scores for a flight-code split were not computed.
+- The final test holds out whole city pairs instead of whole flight codes. Scores for a flight-code split were not computed.
 - Baselines are the median by class, and the median by class and stops, because a route-level median does not exist for unseen routes.
 - Plain Linear Regression is used in the main comparison. Ridge and a log(price) target were checked afterwards (`notebooks/18_ridge_and_log_target.py`, results in `results/ridge_log_target_results.csv`): neither changes the conclusions.
 - MdAPE was computed afterwards from the saved predictions (`notebooks/17_mdape.py`).
 - The arrival time slot is not used. Experiments use a 100,000-row sample; the deployed model uses all rows.
-- The interactive "model curve vs baseline over 1 to 49 days left" explorer and the flight-grouped toggle were **not built**. The site has a fare predictor, a historical fare explorer, a split and metric toggle, and an error-tolerance slider instead.
+- The interactive "model curve vs baseline over 1 to 49 days left" explorer and the flight-grouped toggle were not built. The site has a fare predictor, a historical fare explorer, a split and metric toggle, and an error-tolerance slider instead.
 
 ## Repository structure
 
