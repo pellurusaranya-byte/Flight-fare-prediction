@@ -1,0 +1,37 @@
+Fold,Model,Held-out routes,MAE,RMSE,R2
+1,Linear Regression,"Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",4655.180310403271,6878.215057011111,0.9061235276682278
+1,"Random Forest (A: 30 trees, depth 15, leaf 5)","Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",3864.239888226194,6474.214541755173,0.9168275615765228
+1,"Random Forest (B: 60 trees, depth 20, leaf 3)","Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",3897.157876645304,6539.183514405804,0.9151499092092933
+1,"Random Forest (C: 60 trees, no depth limit, leaf 5)","Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",3899.4286037577886,6565.916370413125,0.9144547393165257
+1,"Gradient Boosting (A: 31 leaves, lr 0.1, 150 it)","Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",3348.2390945196025,5733.196395264715,0.9347772811560223
+1,"Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)","Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",3236.106163559787,5577.39075223946,0.9382741037028612
+1,"Gradient Boosting (C: 31 leaves, lr 0.05, 300 it)","Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",3367.840774510816,5727.38859110957,0.9349093571870173
+1,Baseline: median price by class,"Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",4979.874155149803,7828.046578173347,0.8784060231816307
+1,Baseline: median price by class and stops,"Bangalore-Delhi, Chennai-Hyderabad, Chennai-Mumbai",4385.250580046404,6570.75222225481,0.9143286833255563
+2,Linear Regression,"Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",4658.200105179626,7130.421069458265,0.9179101747729785
+2,"Random Forest (A: 30 trees, depth 15, leaf 5)","Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",3709.976532174644,6426.0952006024045,0.9333264947821485
+2,"Random Forest (B: 60 trees, depth 20, leaf 3)","Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",3709.903572209815,6415.933041141501,0.9335372016073717
+2,"Random Forest (C: 60 trees, no depth limit, leaf 5)","Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",3719.144852118432,6433.284236663693,0.9331772326467088
+2,"Gradient Boosting (A: 31 leaves, lr 0.1, 150 it)","Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",3485.505900800534,5762.21914587824,0.9463908995764143
+2,"Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)","Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",3467.3489548067796,5681.091768628391,0.9478898183922019
+2,"Gradient Boosting (C: 31 leaves, lr 0.05, 300 it)","Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",3464.373726571576,5760.463494489368,0.9464235621846941
+2,Baseline: median price by class,"Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",5009.312620180143,8423.050187622785,0.8854492982143736
+2,Baseline: median price by class and stops,"Bangalore-Kolkata, Bangalore-Mumbai, Chennai-Kolkata",4205.366207873697,7023.92330270924,0.9203439991455914
+3,Linear Regression,"Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",4117.180284633152,6103.291320250779,0.9295378460962772
+3,"Random Forest (A: 30 trees, depth 15, leaf 5)","Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",2921.882615659222,5032.541372818083,0.952092619779481
+3,"Random Forest (B: 60 trees, depth 20, leaf 3)","Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",2970.986159484302,5162.229381257002,0.9495916698325494
+3,"Random Forest (C: 60 trees, no depth limit, leaf 5)","Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",2958.4358321280756,5120.022577113693,0.9504125852749185
+3,"Gradient Boosting (A: 31 leaves, lr 0.1, 150 it)","Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",2545.8907007298785,4523.0564557256575,0.9613017138486201
+3,"Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)","Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",2518.317165696246,4444.272185780214,0.9626380949210035
+3,"Gradient Boosting (C: 31 leaves, lr 0.05, 300 it)","Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",2545.979439045986,4477.9436620975275,0.9620698146243941
+3,Baseline: median price by class,"Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",4331.476252374762,7145.613398163688,0.9034156534343143
+3,Baseline: median price by class and stops,"Chennai-Delhi, Hyderabad-Kolkata, Kolkata-Mumbai",3804.644735526447,5987.774673428019,0.9321798708360134
+4,Linear Regression,"Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",4635.60318066066,7065.725279523825,0.9018181769916008
+4,"Random Forest (A: 30 trees, depth 15, leaf 5)","Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",3364.8874642231767,5648.7974420063965,0.9372477069926484
+4,"Random Forest (B: 60 trees, depth 20, leaf 3)","Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",3389.2522992777294,5707.457608959184,0.9359376323861195
+4,"Random Forest (C: 60 trees, no depth limit, leaf 5)","Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",3368.9595333642305,5656.489720781749,0.9370766841150548
+4,"Gradient Boosting (A: 31 leaves, lr 0.1, 150 it)","Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",3213.009103478975,5531.714503637076,0.9398220884539202
+4,"Gradient Boosting (B: 15 leaves, lr 0.1, 150 it)","Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",3222.493315033997,5592.809667182859,0.9384854748658368
+4,"Gradient Boosting (C: 31 leaves, lr 0.05, 300 it)","Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",3188.3548047833037,5512.973519320927,0.9402291531573578
+4,Baseline: median price by class,"Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",4818.831562593966,8010.983882877619,0.8737912945325452
+4,Baseline: median price by class and stops,"Bangalore-Hyderabad, Delhi-Kolkata, Hyderabad-Mumbai",4184.453392803448,6673.029996179306,0.9124283061054872
