@@ -15,7 +15,7 @@ One row of the data is one fare listing for a specific flight and class on a rou
 
 ## Main result
 
-Models were compared on **3 city pairs that were never used for selection or tuning** (Bangalore–Chennai, Delhi–Hyderabad, Delhi–Mumbai; 20,456 listings). Errors are in Indian rupees.
+Models were compared on 3 city pairs that were never used for selection or tuning (Bangalore–Chennai, Delhi–Hyderabad, Delhi–Mumbai; 20,456 listings). Errors are in Indian rupees.
 
 | Model | MAE | RMSE | R² |
 |---|---:|---:|---:|
