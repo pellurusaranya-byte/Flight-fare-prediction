@@ -98,15 +98,6 @@ export_model.py, check_class_accuracy.py   helper scripts
 requirements.txt
 ```
 
-### Optional: run the Flask version locally
-
-```bash
-cd website
-python app.py
-```
-
-Then open http://127.0.0.1:5000/. The GitHub Pages site in `docs/` does the same thing in the browser and needs no server.
-
 ## AI-use disclosure
 
 I used Python, pandas, NumPy, scikit-learn and Matplotlib for the analysis, VS code, and GitHub Pages to host this site. I used an AI assistant (Claude) for planning the project, writing and debugging some of the code (the evaluation scripts, error analysis, the Ridge and log-target follow-up, and the JSON export for the web page), for editing the report text, and for guidance and code while building this web page. I ran and checked the code and outputs myself, and I am responsible for every result. The data is the public CC0 Kaggle “Flight Price Prediction” dataset by Shubham Bathwal. It contains no personal information, and the repository contains no passwords or API keys.
