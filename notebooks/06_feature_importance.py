@@ -7,6 +7,7 @@ from pathlib import Path
 
 # Project directory
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+(PROJECT_ROOT / "results" / "exploratory").mkdir(parents=True, exist_ok=True)  # superseded experiments write here
 
 # Load the trained Random Forest model
 model_path = PROJECT_ROOT / "models" / "random_forest_sample.joblib"
@@ -56,12 +57,12 @@ plt.gca().invert_yaxis()
 plt.tight_layout()
 
 # Save graph
-graph_path = PROJECT_ROOT / "results" / "feature_importance.png"
+graph_path = PROJECT_ROOT / "results" / "exploratory" / "feature_importance.png"
 plt.savefig(graph_path, dpi=300)
 plt.close()
 
 # Save feature importance data
-csv_path = PROJECT_ROOT / "results" / "feature_importance.csv"
+csv_path = PROJECT_ROOT / "results" / "exploratory" / "feature_importance.csv"
 importance_df.to_csv(csv_path, index=False)
 
 print("\nFeature importance graph saved at:", graph_path)

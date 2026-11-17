@@ -11,6 +11,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # Project directory
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+(PROJECT_ROOT / "results" / "exploratory").mkdir(parents=True, exist_ok=True)  # superseded experiments write here
 
 # Load dataset
 df = pd.read_csv(PROJECT_ROOT / "data" / "Clean_Dataset.csv")
@@ -76,7 +77,7 @@ plt.xlabel("Actual Price (₹)")
 plt.ylabel("Predicted Price (₹)")
 plt.title("Actual vs Predicted Flight Prices")
 plt.tight_layout()
-plt.savefig(PROJECT_ROOT / "results" / "actual_vs_predicted.png", dpi=300)
+plt.savefig(PROJECT_ROOT / "results" / "exploratory" / "actual_vs_predicted.png", dpi=300)
 plt.close()
 
 # 2. Prediction Error Distribution
@@ -87,7 +88,7 @@ plt.xlabel("Prediction Error (₹)")
 plt.ylabel("Number of Flights")
 plt.title("Distribution of Prediction Errors")
 plt.tight_layout()
-plt.savefig(PROJECT_ROOT / "results" / "error_distribution.png", dpi=300)
+plt.savefig(PROJECT_ROOT / "results" / "exploratory" / "error_distribution.png", dpi=300)
 plt.close()
 
 # 3. Actual Price vs Absolute Error
@@ -98,12 +99,12 @@ plt.xlabel("Actual Price (₹)")
 plt.ylabel("Absolute Prediction Error (₹)")
 plt.title("Prediction Error vs Actual Flight Price")
 plt.tight_layout()
-plt.savefig(PROJECT_ROOT / "results" / "error_vs_price.png", dpi=300)
+plt.savefig(PROJECT_ROOT / "results" / "exploratory" / "error_vs_price.png", dpi=300)
 plt.close()
 
 # Save evaluation data
 evaluation_df.to_csv(
-    PROJECT_ROOT / "results" / "prediction_errors.csv",
+    PROJECT_ROOT / "results" / "exploratory" / "prediction_errors.csv",
     index=False
 )
 

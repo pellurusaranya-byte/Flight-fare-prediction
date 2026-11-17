@@ -12,6 +12,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 # Project directory
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+(PROJECT_ROOT / "results" / "exploratory").mkdir(parents=True, exist_ok=True)  # superseded experiments write here
 
 # Load dataset
 df = pd.read_csv(PROJECT_ROOT / "data" / "Clean_Dataset.csv")
@@ -88,7 +89,7 @@ print(results_df.to_string(index=False))
 
 # Save class-wise metrics
 results_df.to_csv(
-    PROJECT_ROOT / "results" / "class_wise_metrics.csv",
+    PROJECT_ROOT / "results" / "exploratory" / "class_wise_metrics.csv",
     index=False
 )
 
@@ -108,7 +109,7 @@ plt.title("Prediction Errors by Ticket Class")
 plt.tight_layout()
 
 plt.savefig(
-    PROJECT_ROOT / "results" / "class_wise_errors.png",
+    PROJECT_ROOT / "results" / "exploratory" / "class_wise_errors.png",
     dpi=300
 )
 

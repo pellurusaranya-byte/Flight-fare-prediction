@@ -21,6 +21,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 # Project directory
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+(PROJECT_ROOT / "results" / "exploratory").mkdir(parents=True, exist_ok=True)  # superseded experiments write here
 
 # Load dataset
 df = pd.read_csv(PROJECT_ROOT / "data" / "Clean_Dataset.csv")
@@ -163,7 +164,7 @@ print(results_df.to_string(index=False))
 
 # Save comparison table
 results_df.to_csv(
-    PROJECT_ROOT / "results" / "final_model_comparison.csv",
+    PROJECT_ROOT / "results" / "exploratory" / "final_model_comparison.csv",
     index=False
 )
 
@@ -185,7 +186,7 @@ plt.suptitle("Comparison of Flight Price Prediction Models")
 plt.tight_layout()
 
 plt.savefig(
-    PROJECT_ROOT / "results" / "final_model_comparison.png",
+    PROJECT_ROOT / "results" / "exploratory" / "final_model_comparison.png",
     dpi=300
 )
 

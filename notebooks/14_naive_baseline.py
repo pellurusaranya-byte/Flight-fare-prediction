@@ -6,6 +6,7 @@ from sklearn.model_selection import GroupShuffleSplit
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 ROOT = Path(__file__).resolve().parents[1]
+(ROOT / "results" / "exploratory").mkdir(parents=True, exist_ok=True)  # superseded experiments write here
 df = pd.read_csv(ROOT / "data" / "Clean_Dataset.csv").sample(n=50000, random_state=42).copy()
 df["route_group"] = df.apply(lambda r: "_".join(sorted([r["source_city"], r["destination_city"]])), axis=1)
 df = df.drop(columns=["Unnamed: 0", "flight"])
@@ -20,5 +21,5 @@ row = {"Model": "Naive baseline (median price by class)",
        "MAE": round(mean_absolute_error(y_test, pred), 2),
        "RMSE": round(float(np.sqrt(mean_squared_error(y_test, pred))), 2),
        "R2 Score": round(r2_score(y_test, pred), 4)}
-pd.DataFrame([row]).to_csv(ROOT / "results" / "naive_baseline.csv", index=False)
+pd.DataFrame([row]).to_csv(ROOT / "results" / "exploratory" / "naive_baseline.csv", index=False)
 print(row)

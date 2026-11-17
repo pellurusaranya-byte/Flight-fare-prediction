@@ -17,6 +17,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 # 1. Set project folder
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+(PROJECT_ROOT / "results" / "exploratory").mkdir(parents=True, exist_ok=True)  # superseded experiments write here
 
 
 # 2. Load dataset
@@ -174,7 +175,7 @@ print(results_df.to_string(index=False))
 
 # 11. Save results
 results_df.to_csv(
-    PROJECT_ROOT / "results" / "robust_validation.csv",
+    PROJECT_ROOT / "results" / "exploratory" / "robust_validation.csv",
     index=False
 )
 

@@ -1,3 +1,5 @@
+import os
+os.makedirs("results/exploratory", exist_ok=True)  # superseded experiments write here
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -63,7 +65,7 @@ plt.title("Distribution of Flight Prices")
 plt.xlabel("Ticket Price (₹)")
 plt.ylabel("Number of Flights")
 plt.tight_layout()
-plt.savefig("results/price_distribution.png")
+plt.savefig("results/exploratory/price_distribution.png")
 plt.close()
 
 
@@ -76,7 +78,7 @@ plt.xlabel("Airline")
 plt.ylabel("Average Price (₹)")
 plt.xticks(rotation=30)
 plt.tight_layout()
-plt.savefig("results/airline_prices.png")
+plt.savefig("results/exploratory/airline_prices.png")
 plt.close()
 
 
@@ -88,7 +90,7 @@ plt.title("Flight Prices by Ticket Class")
 plt.xlabel("Ticket Class")
 plt.ylabel("Ticket Price (₹)")
 plt.tight_layout()
-plt.savefig("results/class_prices.png")
+plt.savefig("results/exploratory/class_prices.png")
 plt.close()
 
 
@@ -102,7 +104,7 @@ plt.title("Average Flight Price vs Days Left Before Departure")
 plt.xlabel("Days Left Before Departure")
 plt.ylabel("Average Price (₹)")
 plt.tight_layout()
-plt.savefig("results/days_left_prices.png")
+plt.savefig("results/exploratory/days_left_prices.png")
 plt.close()
 
 
@@ -122,7 +124,7 @@ plt.title("Average Flight Price by Number of Stops")
 plt.xlabel("Number of Stops")
 plt.ylabel("Average Ticket Price (₹)")
 plt.tight_layout()
-plt.savefig("results/stops_prices.png")
+plt.savefig("results/exploratory/stops_prices.png")
 plt.close()
 
 
@@ -141,5 +143,5 @@ plt.title("Average Flight Price by Source City")
 plt.xlabel("Source City")
 plt.ylabel("Average Ticket Price (₹)")
 plt.tight_layout()
-plt.savefig("results/source_city_prices.png")
+plt.savefig("results/exploratory/source_city_prices.png")
 plt.close()
