@@ -142,8 +142,8 @@ def predict():
         duration = float(request.form["duration"])
         days_left = int(request.form["days_left"])
 
-        # Temporarily estimate arrival category
-        # We will improve this calculation later.
+        # The final model does not use arrival time (see the report). The column is
+        # only filled in so the input has the same layout as the older experiments.
         arrival_time = departure_time
 
         # Prepare input in the same format used during training
