@@ -88,7 +88,7 @@ td small{color:var(--muted)}
 <p><b>Quality checks:</b></p>
 <ul>
 <li>No missing values.</li>
-<li>No fully duplicated rows. Ignoring the flight code, 2,213 rows are exact repeats (the same listing seen on different flights), which is under 1% of the data and harmless because our validation splits whole city pairs.</li>
+<li>No fully duplicated rows. Ignoring the flight code, 2,213 rows are exact repeats (the same listing seen on different flights), which is under 1% of the data. This is harmless in our main validation, which holds out whole city pairs. In the random and flight-code contrast splits an exact repeat could land on both sides, but at under 1% of the rows the effect is negligible.</li>
 <li>Prices are strongly skewed with two clusters: Economy has a median of about ₹5,772 and Business about ₹53,164. This is the biggest fact about the data.</li>
 <li><b>Business class exists for only two airlines</b> (Air India and Vistara). AirAsia, GO FIRST, Indigo and SpiceJet are Economy-only. Even for those two, Business is missing on some route and stop combinations, so the fare predictor only offers combinations that exist in the data.</li>
 </ul>
